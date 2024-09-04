@@ -1,4 +1,5 @@
-venv
+venv/
 *.swp
 .env
+.DS_Store
 
