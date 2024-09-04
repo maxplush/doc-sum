@@ -26,7 +26,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: run doctests
         run: |
-          python3 -m doctest docsum.py
+          python3 -m doctest docsumvim.py
       - name: run all files
         run: |
-          for file in docs/*; do python3 docsum.py ${file}; done
+          for file in docs/*; do python3 docsumvim.py ${file}; done
