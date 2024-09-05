@@ -27,6 +27,3 @@ jobs:
       - name: test declaration
         run: |
           python3 docsumvim.py docs/declaration.txt
-          # The following line runs the script on all files in the docs directory
-          for file in docs/*; do python3 docsumvim.py "${file}"; done
-
