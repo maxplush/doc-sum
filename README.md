@@ -1,4 +1,4 @@
-# docsum.py
+# docsum.py ![](https://github.com/maxplush/docsum-vim/blob/main/.github/workflows/tests.yml/badge.svg)
 
 `docsum.py` is a Python script that uses the Groq API to summarize the content of various file types. The script uses the fulltext package which allwos for text to be extracted from various document formats. Then the script sends the extracted content to the Groq API and retrieves a summary in one paragraph in english, simplified to a first-grade reading level. Input 
 files that are not in english will still return a english summary. 
