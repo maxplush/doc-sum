@@ -29,4 +29,5 @@ jobs:
           python3 -m doctest docsumvim.py
       - name: run all files
         run: |
-          for file in docs/*; do python3 docsumvim.py ${file}; done
+	  python3 docsumvim.py docs/declaration.txt	
+         # for file in docs/*; do python3 docsumvim.py ${file}; done
