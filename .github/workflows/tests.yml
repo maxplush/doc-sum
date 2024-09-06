@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        python: [3.8, 3.9]
+        python: [3.11] # Avoid Python 3.12 for now
     runs-on: ubuntu-latest
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
