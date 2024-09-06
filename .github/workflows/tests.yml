@@ -27,5 +27,5 @@ jobs:
       - name: test declaration
         run: |
           python3 docsumvim.py docs/declaration.txt
-	  python3 docsumvim.py docs/news-mx.txt
+          python3 docsumvim.py docs/news-mx.txt
 
