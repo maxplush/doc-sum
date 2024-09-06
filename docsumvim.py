@@ -4,9 +4,6 @@ from groq import Groq
 import fulltext
 import time
 
-# next steps are try and add all of the docs files bac into this folder
-# add the .github/workspaces/test.yml to this and see if this code works?
-
 # for the terminal side code - do that chatgpt steps?
 
 # next step is chunking
