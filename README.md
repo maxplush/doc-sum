@@ -15,7 +15,11 @@ files that are not in english will still return a english summary.
 
 To use docsum.py, follow these steps:
 
-1. Ensure your .env file is configured correctly with your Groq API key.
+1. Ensure your .env file is configured correctly with your Groq API key. Connect your .env by running the command.
+
+```
+$ export $(cat .env)
+```
 
 2. Prepare a file containing the content you want to summarize.
 
