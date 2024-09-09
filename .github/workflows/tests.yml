@@ -10,25 +10,84 @@ jobs:
   tests:
     strategy:
       matrix:
-        python: [3.11] # Avoid Python 3.12 for now
+        python: [3.8]
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
       - uses: actions/checkout@v2
+      
+      # Set up Python
       - name: Set up Python ${{matrix.python}}
         uses: actions/setup-python@v2
         with:
           python-version: ${{matrix.python}}
-      - name: Install dependencies
+      
+      # Install system dependencies (poppler-utils for PDF handling)
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils  # Required for PDF text extraction with fulltext
+      
+      # Install Python dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install PyPDF2 fulltext chardet  # Explicitly install needed Python packages
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Set working directory
-        run: cd $GITHUB_WORKSPACE/docsum-vim  # Make sure the working directory is set to the root of your repo
-      - name: Run tests
+      
+      # Run the tests
+      - name: Test document summaries
         run: |
-          python3 docsum.py docs/declaration
+          python3 docsum.py docs/declarationname: tests
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        python: [3.8]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Set up Python
+      - name: Set up Python ${{matrix.python}}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{matrix.python}}
+      
+      # Install system dependencies (poppler-utils for PDF handling)
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils  # Required for PDF text extraction with fulltext
+      
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyPDF2 fulltext chardet  # Explicitly install needed Python packages
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      # Run the tests
+      - name: Test document summaries
+        run: |
+          python3 docsum.py docs/declaration.txt
+          python3 docsum.py docs/2023.findings-emnlp.945.pdf
+          python3 docsum.py docs/estados-unidos-admite-haber-perdido-la-pista-de-32000-menores-migrantes-no-acompanados.html
+          python3 docsum.py docs/news-mx.txt
+          python3 docsum.py docs/constitution-mx.txt
+
           python3 docsum.py docs/2023.findings-emnlp.945.pdf
           python3 docsum.py docs/estados-unidos-admite-haber-perdido-la-pista-de-32000-menores-migrantes-no-acompanados.html
           python3 docsum.py docs/news-mx.txt
