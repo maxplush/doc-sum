@@ -24,6 +24,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Set working directory
+        run: cd $GITHUB_WORKSPACE/docsum-vim  # Make sure the working directory is set to the root of your repo
       - name: Run tests
         run: |
           python3 docsum.py docs/declaration
