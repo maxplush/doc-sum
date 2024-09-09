@@ -27,4 +27,4 @@ jobs:
       - name: test declaration
         run: |
           for file in docs/*; do python3 v10docsumvim.py ${file}; done
-  
+	  python3 -m doctest docsum.py  

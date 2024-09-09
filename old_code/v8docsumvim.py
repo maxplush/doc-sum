@@ -11,7 +11,7 @@ TOKEN_LIMIT = 4000  # Groq API token limit
 CHUNK_SIZE = 3500   # Chunk size to leave room for system and user messages
 SUMMARY_PROMPT = 'Summarize the input text below and give me a summary of what it says on a 5th grade level'
 RETRY_LIMIT = 3     # Number of retry attempts
-RETRY_DELAY = 5     # Delay between retries in seconds
+RETRY_DELAY = 20     # Delay between retries in seconds
 
 # Load environment variables
 parser = argparse.ArgumentParser()
