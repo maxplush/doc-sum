@@ -36,13 +36,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install PyPDF2 fulltext chardet  # Explicitly install needed Python packages
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      
+          sudo apt-get install -y poppler-utils  # Install pdftotext
+      # Run doctests
+      - name: Run doctests
+        run: |
+          python3 -m doctest docsum.py
       # Run the tests
       - name: Test document summaries
         run: |
-          python3 docsum.py docs/declaration.txt
-          python3 docsum.py docs/2023.findings-emnlp.945.pdf
-          python3 docsum.py docs/estados-unidos-admite-haber-perdido-la-pista-de-32000-menores-migrantes-no-acompanados.html
-          python3 docsum.py docs/news-mx.txt
-          python3 docsum.py docs/constitution-mx.txt
-
+          for file in docs/*; do python3 docsum.py ${file}; done

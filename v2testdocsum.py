@@ -9,6 +9,16 @@ import chardet
 
 # Detect the encoding of the file and extract text from different formats
 def detect_encoding_and_extract_text(filepath):
+    """
+    Detect the encoding of a given file and extract the text content, handling
+    different formats such as HTML and plain text files.
+
+    Args:
+        filepath (str): Path to the document to be processed.
+
+    Returns:
+        str: The extracted text from the document.
+    """
     with open(filepath, 'rb') as f:
         encoding_info = chardet.detect(f.read())
         detected_encoding = encoding_info['encoding']
@@ -26,6 +36,17 @@ def detect_encoding_and_extract_text(filepath):
 
 # Chunk the document into manageable sizes for processing
 def chunk_text_by_size(text, max_chunk_size=4000):
+    """
+    Break the input text into smaller chunks based on a maximum chunk size,
+    ensuring the text is split at logical boundaries like paragraphs.
+
+    Args:
+        text (str): The full document text to be chunked.
+        max_chunk_size (int): Maximum number of characters allowed in each chunk.
+
+    Returns:
+        list: A list containing the text split into manageable chunks.
+    """
     if not text:
         return []
 
@@ -51,8 +72,19 @@ def chunk_text_by_size(text, max_chunk_size=4000):
 
     return chunks
 
-# Perform Groq API queries with retry logic
+# Perform Groq API queries with retry logic for robustness
 def perform_groq_query(text_chunk, api_client, retry_delay=5):
+    """
+    Query the Groq API with a text chunk and handle retries for errors like rate limits.
+
+    Args:
+        text_chunk (str): Text to be submitted to the Groq API.
+        api_client (Groq): Initialized Groq API client.
+        retry_delay (int): Seconds to wait before retrying after an error.
+
+    Returns:
+        groq.ChatCompletion: The completion object containing the summarized text.
+    """
     try:
         return api_client.chat.completions.create(
             messages=[
@@ -76,6 +108,16 @@ def perform_groq_query(text_chunk, api_client, retry_delay=5):
 
 # Main function to process the document and generate the summary
 def summarize_document(filepath, api_key):
+    """
+    Main function to summarize a document using the Groq API.
+
+    Args:
+        filepath (str): Path to the document to be summarized.
+        api_key (str): API key for the Groq API.
+
+    Returns:
+        str: The final summarized text.
+    """
     api_client = groq.Groq(api_key=api_key)
     document_text = detect_encoding_and_extract_text(filepath)
     summary_response = perform_groq_query(document_text, api_client)
